@@ -22,7 +22,9 @@
                         <!-- Authentication Links -->
 
                         <li class="nav-item">
-                            <a class="nav-link" href="">Login</a>
+                              <router-link to="/" class="nav-link">
+                           Login  
+                            </router-link>
                         </li>
 
                         <li class="nav-item">
@@ -40,12 +42,12 @@
                         <div class="card-header">Register</div>
 
                         <div class="card-body">
-                            <form method="POST" @submit="submitForm">
+                            <form  @submit="submitForm">
                             <div class="form-group row">
                                     <label for="email" class="col-md-4 col-form-label text-md-right">Name</label>
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control" name="name" value=""
-                                             @keyup="name = $event.target.value" autofocus><br>
+                                             @keyup="name = $event.target.value"><br>
                                              <div v-if="errors.name" class="alert alert-danger">{{ errors.name }}</div>
                                     </div>
                                 </div>
@@ -54,7 +56,7 @@
 
                                     <div class="col-md-6">
                                         <input id="email" type="text" class="form-control" name="email" value=""
-                                             @keyup="email = $event.target.value" autofocus><br>
+                                             @keyup="email = $event.target.value" ><br>
                                              <div v-if="errors.email" class="alert alert-danger">{{ errors.email }}</div>
                                     </div>
                                 </div>
@@ -63,7 +65,7 @@
 
                                     <div class="col-md-6">
                                         <input id="mobile" type="text" class="form-control" name="mobile" value=""
-                                             @keyup="mobile = $event.target.value" autofocus><br>   
+                                             @keyup="mobile = $event.target.value" ><br>   
                                              <div v-if="errors.mobile" class="alert alert-danger">{{ errors.mobile }}</div>
                                     </div>
                                 </div>
@@ -127,8 +129,8 @@
             };
         },
         methods: {
-            submitForm: function (e) {
-                var errors = Auth.signupValidatio(this.password, this.email,this.name,this.mobile);
+           submitForm: function (e) {
+                var errors = Auth.signupValidation(this.password, this.email,this.name,this.mobile);
                 if (Object.keys(errors).length == 0) {
                     (async () => {
                         let result = await Auth.signup(this.name,this.email, this.password,this.mobile);

@@ -22,7 +22,9 @@
                         <!-- Authentication Links -->
 
                         <li class="nav-item">
-                            <a class="nav-link" href="">Sign Up</a>
+                          <router-link to="/signup" class="nav-link">
+                          Sign Up
+                            </router-link>
                         </li>
 
                         <li class="nav-item">
