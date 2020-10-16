@@ -52,6 +52,7 @@ You can now access the server at http://localhost:8000
     git clone https://github.com/shaikharbaz275/crudApp-in-Vue.js
     cd crudApp-in-Vue
     composer install
+    npm install  
     cp .env.example .env
     php artisan key:generate
     php artisan jwt:generate 
