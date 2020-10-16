@@ -1,4 +1,4 @@
-# ![Crud App using laravel With Vue js]
+# Crud App using laravel With Vue js
 
 ----------
 
