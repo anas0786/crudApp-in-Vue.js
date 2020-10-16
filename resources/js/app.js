@@ -8,28 +8,15 @@ require('./bootstrap');
 import VueRouter from 'vue-router';
 import router from './router.js';
 
-
-
-
-
-
 window.Vue = require('vue');
 
+Vue.use(require('vue-resource'));
+Vue.use(require('vue-moment'));
 Vue.use(VueRouter);
 
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
- Vue.component('example-component', require('./view/ExampleComponent.vue').default);
+Vue.component('example-component', require('./view/ExampleComponent.vue').default);
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 
 
@@ -52,11 +39,11 @@ Vue.use(VueRouter);
                     if(error.response.data.message=="token expired" &&error.response.status==401)
                     {
                       sessionStorage.setItem("access_token",error.response.data.token);
-
-                        console.log(error.response.data.token)
-                        // router.replace({
-                        //     path: "/login",
-                        //   });
+                    }
+                    if(error.response.data.message=="token not found" &&error.response.status==401 ||
+                     error.response.data.message=="token invalid")
+                    {
+                      this.$router.push({ name: 'login',});
                     }
                   return Promise.reject(error.response);
                 }

@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('jwtauth');
+        $this->middleware('CheckToken');
     }
     /**
      * Display a listing of the resource.
@@ -24,10 +24,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $data = Post::latest()->with('user')->paginate(5);
+        return response()->json($data);
+
     }
 
     /**
+     * 
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -46,16 +49,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-         'title'=>'required',
-         'description'=>'required',
-         'user_id'=>'required'
+            'title' => 'required',
+            'description' => 'required',
+            'user_id' => 'required'
         ]);
 
         Post::create($data);
 
-         return response()->json([
+        return response()->json([
             'message' => 'successfully data store',
-         ],200);
+        ], 200);
     }
 
     /**
@@ -64,9 +67,20 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        //
+        $data = Post::where('id', $id)->first();
+
+        $respose = [
+            'title' => $data->title,
+            'description' => $data->description,
+            'date' => $data->created_at->format('d-M-Y'),
+            'auther' => $data->user->name,
+            'user_id' => $data->user->id
+        ];
+        return response()->json($respose);
+
+
     }
 
     /**
@@ -87,9 +101,20 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $post = Post::where('id', $id)->first();
+        $post->update($data);
+
+        return response()->json([
+            'message' => 'successfully data update',
+        ], 200);
     }
 
     /**
@@ -98,8 +123,15 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $data = Post::where('id', $id)->first();
+        $data->delete();
+
+        return response()->json([
+            'message' => 'successfully data delete',
+        ], 200);
+
+
     }
 }

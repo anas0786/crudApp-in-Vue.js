@@ -16,17 +16,22 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+             
+     
+//Auth Route
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+Route::post('me', [AuthController::class, 'me']);
+
+//post route
+Route::middleware(['CheckToken'])->group(function () {
+    Route::post('store', [PostController::class, 'store']);
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('postview/{id}', [PostController::class, 'show']);
+    Route::post('update/{id}', [PostController::class, 'update']);
+    Route::get('delete/{id}', [PostController::class, 'destroy']);
 });
 
-
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', [AuthController::class, 'me']);
-
-    //post route
-    Route::post('store', [PostController::class, 'store']);
-   

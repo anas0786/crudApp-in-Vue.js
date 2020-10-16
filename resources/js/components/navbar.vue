@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
-        <a class="navbar-brand mr-1" href="/">St.Jude’s High School</a>
+     <router-link to="/" class="navbar-brand mr-1">
+       Blog  </router-link>
 
         <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
@@ -21,49 +21,58 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                     <a class="dropdown-item" href="#"></a>
-                    <a href="" class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+                    <button class="dropdown-item" href="#" data-toggle="modal" v-on:click="logout"
+                        data-target="#logoutModal">Logout</button>
                 </div>
             </li>
         </ul>
     </nav>
 </template>
-<style>
-@import '/../vendor/fontawesome-free/css/all.min.css';
-@import '/../vendor/datatables/dataTables.bootstrap4.css';
-@import '/../css/sb-admin.css';
+<style scoped>
+    @import '/../vendor/fontawesome-free/css/all.min.css';
+    @import '/../vendor/datatables/dataTables.bootstrap4.css';
+    @import '/../css/sb-admin.css';
+
 </style>
-<script>
-@import '/../vendor/jquery/jquery.min.js';
-@import '/../vendor/bootstrap/js/bootstrap.bundle.min.js';
-@import '/../vendor/jquery-easing/jquery.easing.min.js';
-@import '/../vendor/chart.js/Chart.min.js';
-@import '/../vendor/datatables/jquery.dataTables.js';
-@import '/../vendor/datatables/dataTables.bootstrap4.js';
-@import '/../js/sb-admin.min.js';
-@import '/../js/demo/datatables-demo.js';
-@import '/../js/demo/chart-area-demo.js';
-
-
+<script scoped>
+    @import '/../vendor/jquery/jquery.min.js';
+    @import '/../vendor/bootstrap/js/bootstrap.bundle.min.js';
+    @import '/../vendor/jquery-easing/jquery.easing.min.js';
+    @import '/../vendor/chart.js/Chart.min.js';
+    @import '/../vendor/datatables/jquery.dataTables.js';
+    @import '/../vendor/datatables/dataTables.bootstrap4.js';
+    @import '/../js/sb-admin.min.js';
+    @import '/../js/demo/datatables-demo.js';
+    @import '/../js/demo/chart-area-demo.js';
 
 </script>
 <script>
+    import axios from 'axios';
 
-
-
-    import LoginController from '../Controllers/LoginController.js';
 
     export default {
 
-        data() {
-            return {
-                errors: {
-                    email: '',
-                    password: ''
-                },
-                email: '',
-                password: '',
-            };
-        },
+        methods: {
+            logout: function (event) {
+                axios.post('/api/logout',{
+                }, {
+                        headers: {
+                             'Authorization': `Bearer ${sessionStorage.getItem("access_token")}` 
+                        },
+                    })
+                    .then((response) => {
+                       if(response.data.message=="Successfully logged out" & response.status==200)
+                       {
+                           sessionStorage.removeItem("access_token");
+                           sessionStorage.removeItem("user_id");
+                          this.$router.push('login');
+                       }
+                    }, (error) => {
+                        console.log(error);
+                    });
+            }
+        }
+
     }
 
 </script>

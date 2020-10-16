@@ -1,62 +1,114 @@
 <template>
-<div>
- <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Blog</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><router-link to="/">Home</router-link></li>
-    <li><router-link to="/">Login</router-link></li>
-    </ul>
-  </div>
-   <router-view></router-view>
-</nav>
-    <div class="container">
-   
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="container">
+    <div>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="">
+                   Blogs
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Login</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href=""></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav><br>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Register</div>
+
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-3">
+                            <form method="POST" @submit="submitForm">
+                            <div class="form-group row">
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">Name</label>
+                                    <div class="col-md-6">
+                                        <input id="name" type="text" class="form-control" name="name" value=""
+                                             @keyup="name = $event.target.value" autofocus><br>
+                                             <div v-if="errors.name" class="alert alert-danger">{{ errors.name }}</div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
 
-                                    <form @submit="checkForm">
-                                        <div class="form-group">
-                                            <label for="email">Email address:</label>
-                                            <input type="email" @keyup="email = $event.target.value"
-                                                class="form-control" id="email"><br>
-                                            <div v-if="errors.email" class="alert alert-danger">{{ errors.email }}</div>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pwd">Password:</label>
-                                            <input type="password" class="form-control" id="pwd"
-                                                @keyup="password = $event.target.value"><br>
-                                            <div v-if="errors.password" class="alert alert-danger">{{ errors.password }}
-                                            </div>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label><input type="checkbox"> Remember me</label>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                                    </form>
+                                    <div class="col-md-6">
+                                        <input id="email" type="text" class="form-control" name="email" value=""
+                                             @keyup="email = $event.target.value" autofocus><br>
+                                             <div v-if="errors.email" class="alert alert-danger">{{ errors.email }}</div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">Mobile Number</label>
+
+                                    <div class="col-md-6">
+                                        <input id="mobile" type="text" class="form-control" name="mobile" value=""
+                                             @keyup="mobile = $event.target.value" autofocus><br>   
+                                             <div v-if="errors.mobile" class="alert alert-danger">{{ errors.mobile }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">password</label>
+
+                                    <div class="col-md-6">
+                                        <input id="password" type="password" class="form-control" name="password"
+                                             @keyup="password = $event.target.value"><br>
+                                             <div v-if="errors.password" class="alert alert-danger">{{ errors.password }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-6 offset-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember"
+                                                id="remember"> Remember
+
+                                            <label class="form-check-label" for="remember">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            Sign Up
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </template>
 
 <script>
-    import LoginController from '../Controllers/LoginController.js';
+    import Auth from '../container/AuthContainer.js';
 
     export default {
 
@@ -64,30 +116,32 @@
             return {
                 errors: {
                     email: '',
-                    password: ''
+                    password: '',
+                    mobile:'',
+                    name:''
                 },
                 email: '',
                 password: '',
+                mobile:'',
+                name:''
             };
         },
         methods: {
-            checkForm: function (e) {
-                var errors = LoginController.validation(this.password, this.email);
+            submitForm: function (e) {
+                var errors = Auth.signupValidatio(this.password, this.email,this.name,this.mobile);
                 if (Object.keys(errors).length == 0) {
                     (async () => {
-                        let result = await LoginController.login(this.email, this.password);
+                        let result = await Auth.signup(this.name,this.email, this.password,this.mobile);
                         if (result == true) {
-                            console.log(result)
+                             this.$router.push('home');
                         } else {
+                             this.errors = {}
                             let errors = result;
                             for (const [key, value] of Object.entries(errors)) {
-                                 this.errors[key] = value;
+                                this.errors[key] = value;
                             }
-                              console.log(this.errors)
                         }
                     })()
-                    
-
 
                 } else {
                     this.errors = {}

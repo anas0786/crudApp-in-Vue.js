@@ -30,7 +30,7 @@ class Jwt
                 return response()->json(['sucess'=>false,'token'=>$token,'message'=>"token expired"],401);
             }else if($e instanceof TokenInvalidException)
             {
-                return response()->json(['sucess'=>false,'message'=>"token Invalide"],401);
+                return response()->json(['sucess'=>false,'message'=>"token invalid"],401);
             }
             else {
                 return response()->json(['sucess'=>false,'message'=>"token not found"],401);

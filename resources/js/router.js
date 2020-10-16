@@ -3,6 +3,10 @@ import signup from './view/SignupComponent.vue';
 import Login from './view/ExampleComponent.vue';
 import Home from './view/HomeComponent.vue';
 import Create_Post from './view/Post/create.vue';
+import view_Post from './view/Post/view.vue';
+import edit_post from './view/Post/edit.vue';
+
+
 
 
 
@@ -25,6 +29,7 @@ const routes = [
         path: '/home',
         component: Home,
         name: 'home',
+        props: true,
         meta: {
             auth: true
         }
@@ -37,6 +42,22 @@ const routes = [
             auth: true
         }
     },
+    {
+        path: '/post/:id',
+        component: view_Post,
+        name: 'post',
+        meta: {
+            auth: true
+        }
+     },
+     {
+        path: '/edit_post/:id',
+        component:edit_post,
+        name: 'edit_post',
+        meta: {
+            auth: true
+        }
+     }
   ]
   const router = new VueRouter({
     routes 

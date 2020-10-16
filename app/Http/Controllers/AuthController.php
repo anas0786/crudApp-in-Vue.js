@@ -11,15 +11,15 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    
-     /**
+
+    /**
      * Create a new AuthController instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('jwtauth', ['except' => ['login', 'register']]);
+        $this->middleware('CheckToken', ['except' => ['login', 'register']]);
     }
 
 
@@ -28,6 +28,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'name' => 'required|max:100',
             'email' => 'required|email|unique:users',
+            'mobile' => 'required|digits:10|unique:users',
             'password' => 'required|min:8'
         ]);
 
@@ -54,9 +55,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|min:8'
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -87,7 +88,7 @@ class AuthController extends Controller
     {
         $this->guard()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out'], 200);
     }
 
     /**
