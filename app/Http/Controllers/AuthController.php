@@ -23,6 +23,13 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * Get a JWT token via given user Details.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -69,15 +76,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthorized'], 401);
     }
 
-    /**
-     * Get the authenticated User
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json($this->guard()->user());
-    }
 
     /**
      * Log the user out (Invalidate the token)

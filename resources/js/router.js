@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router';
 import signup from './view/SignupComponent.vue';
-import Login from './view/ExampleComponent.vue';
+import Login from './view/LoginComponent.vue';
 import Home from './view/HomeComponent.vue';
 import Create_Post from './view/Post/create.vue';
 import view_Post from './view/Post/view.vue';

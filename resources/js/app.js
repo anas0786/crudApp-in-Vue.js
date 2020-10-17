@@ -15,7 +15,6 @@ Vue.use(require('vue-moment'));
 Vue.use(VueRouter);
 
 
-Vue.component('example-component', require('./view/ExampleComponent.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 
